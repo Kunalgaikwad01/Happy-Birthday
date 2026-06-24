@@ -1,0 +1,877 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Happy Birthday, Best Friend</title>
+  <style>
+    :root {
+      --rose: #f35b8a;
+      --berry: #9d174d;
+      --peach: #ffd8c7;
+      --cream: #fff7ed;
+      --mint: #b7f7d4;
+      --ink: #21121a;
+      --glass: rgba(255, 255, 255, 0.18);
+      --line: rgba(255, 255, 255, 0.38);
+      --shadow: 0 24px 70px rgba(93, 15, 54, 0.28);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: "Segoe UI", Arial, sans-serif;
+      color: var(--cream);
+      background:
+        radial-gradient(circle at 12% 16%, rgba(255, 216, 199, 0.42), transparent 28%),
+        radial-gradient(circle at 84% 8%, rgba(183, 247, 212, 0.35), transparent 24%),
+        linear-gradient(135deg, #2a1023 0%, #7f1d4e 42%, #f08a9a 100%);
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background-image:
+        linear-gradient(rgba(255, 255, 255, 0.06) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.06) 1px, transparent 1px);
+      background-size: 42px 42px;
+      mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.65), transparent 72%);
+      z-index: -3;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    button {
+      font: inherit;
+    }
+
+    .ambient {
+      position: fixed;
+      inset: 0;
+      overflow: hidden;
+      pointer-events: none;
+      z-index: -2;
+    }
+
+    .heart {
+      position: absolute;
+      width: 18px;
+      height: 18px;
+      opacity: 0.42;
+      transform: rotate(45deg);
+      background: rgba(255, 255, 255, 0.72);
+      animation: floatUp linear infinite;
+      filter: drop-shadow(0 0 12px rgba(255, 255, 255, 0.45));
+    }
+
+    .heart::before,
+    .heart::after {
+      content: "";
+      position: absolute;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: inherit;
+    }
+
+    .heart::before {
+      left: -9px;
+    }
+
+    .heart::after {
+      top: -9px;
+    }
+
+    @keyframes floatUp {
+      0% {
+        transform: translate3d(0, 108vh, 0) rotate(45deg) scale(0.7);
+      }
+      100% {
+        transform: translate3d(var(--drift), -12vh, 0) rotate(405deg) scale(1.15);
+      }
+    }
+
+    .stage {
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      padding: 34px clamp(16px, 4vw, 64px) 28px;
+      position: relative;
+    }
+
+    .hero {
+      width: min(1180px, 100%);
+      display: grid;
+      grid-template-columns: minmax(0, 0.92fr) minmax(320px, 1.08fr);
+      gap: clamp(24px, 5vw, 72px);
+      align-items: center;
+    }
+
+    .copy {
+      position: relative;
+      z-index: 2;
+    }
+
+    .tag {
+      width: fit-content;
+      padding: 8px 12px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.14);
+      box-shadow: 0 12px 34px rgba(33, 18, 26, 0.16);
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-size: 0.78rem;
+    }
+
+    h1 {
+      margin: 22px 0 18px;
+      max-width: 700px;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(3.2rem, 8vw, 7.4rem);
+      line-height: 0.91;
+      letter-spacing: 0;
+      text-wrap: balance;
+      text-shadow: 0 20px 48px rgba(47, 5, 27, 0.42);
+    }
+
+    .lead {
+      max-width: 620px;
+      margin: 0 0 28px;
+      color: rgba(255, 247, 237, 0.88);
+      font-size: clamp(1rem, 2vw, 1.26rem);
+      line-height: 1.65;
+    }
+
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      align-items: center;
+    }
+
+    .btn {
+      border: 1px solid transparent;
+      border-radius: 999px;
+      min-height: 48px;
+      padding: 0 18px;
+      cursor: pointer;
+      color: var(--ink);
+      background: var(--cream);
+      font-weight: 800;
+      box-shadow: 0 18px 38px rgba(75, 7, 39, 0.28);
+      transition: transform 180ms ease, box-shadow 180ms ease, background 180ms ease;
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 22px 46px rgba(75, 7, 39, 0.34);
+    }
+
+    .btn.secondary {
+      color: var(--cream);
+      background: rgba(255, 255, 255, 0.15);
+      border-color: var(--line);
+      backdrop-filter: blur(14px);
+    }
+
+    .visual-wrap {
+      min-height: min(760px, 78vh);
+      display: grid;
+      place-items: center;
+      perspective: 1300px;
+    }
+
+    .photo-orbit {
+      position: relative;
+      width: min(500px, 86vw);
+      aspect-ratio: 0.76;
+      transform-style: preserve-3d;
+      animation: breathe 6s ease-in-out infinite;
+    }
+
+    @keyframes breathe {
+      0%, 100% {
+        transform: rotateX(4deg) rotateY(-12deg) translateY(0);
+      }
+      50% {
+        transform: rotateX(-1deg) rotateY(10deg) translateY(-10px);
+      }
+    }
+
+    .portrait {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+      border: 1px solid rgba(255, 255, 255, 0.44);
+      border-radius: 28px;
+      box-shadow: var(--shadow);
+      background: rgba(255, 255, 255, 0.1);
+      transform-style: preserve-3d;
+    }
+
+    .portrait.main {
+      z-index: 4;
+      transform: translateZ(88px);
+    }
+
+    .portrait.side-a {
+      inset: 9% auto auto -13%;
+      width: 55%;
+      height: 55%;
+      opacity: 0.88;
+      z-index: 3;
+      transform: rotateY(28deg) translateZ(-10px);
+    }
+
+    .portrait.side-b {
+      inset: auto -12% 5% auto;
+      width: 58%;
+      height: 58%;
+      opacity: 0.9;
+      z-index: 5;
+      transform: rotateY(-22deg) translateZ(132px);
+    }
+
+    .portrait img,
+    .portrait video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      filter: saturate(1.05) contrast(1.03);
+    }
+
+    .spark-ring {
+      position: absolute;
+      inset: 8%;
+      border: 2px solid rgba(255, 247, 237, 0.45);
+      border-radius: 34px;
+      transform: translateZ(34px) rotate(4deg);
+      pointer-events: none;
+      z-index: 6;
+    }
+
+    .spark-ring::before,
+    .spark-ring::after {
+      content: "";
+      position: absolute;
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background: var(--mint);
+      box-shadow: 0 0 24px var(--mint), 260px 340px 0 rgba(255, 216, 199, 0.9);
+      animation: twinkle 1.9s ease-in-out infinite;
+    }
+
+    .spark-ring::before {
+      left: -8px;
+      top: 12%;
+    }
+
+    .spark-ring::after {
+      right: 18%;
+      bottom: -8px;
+      animation-delay: 0.7s;
+    }
+
+    @keyframes twinkle {
+      50% {
+        transform: scale(1.8);
+        opacity: 0.45;
+      }
+    }
+
+    .scroll-cue {
+      position: absolute;
+      left: 50%;
+      bottom: 18px;
+      transform: translateX(-50%);
+      display: grid;
+      place-items: center;
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.13);
+      animation: pulse 1.8s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      50% {
+        transform: translateX(-50%) translateY(-6px);
+      }
+    }
+
+    section {
+      padding: 76px clamp(16px, 4vw, 64px);
+      position: relative;
+    }
+
+    .section-inner {
+      width: min(1120px, 100%);
+      margin: 0 auto;
+    }
+
+    .section-title {
+      margin: 0 0 24px;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(2.1rem, 4vw, 4.4rem);
+      line-height: 1;
+      text-wrap: balance;
+    }
+
+    .cinema {
+      display: grid;
+      grid-template-columns: minmax(0, 1.1fr) minmax(260px, 0.9fr);
+      gap: 28px;
+      align-items: center;
+    }
+
+    .video-shell {
+      position: relative;
+      aspect-ratio: 16 / 10;
+      overflow: hidden;
+      border-radius: 24px;
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow);
+      background: rgba(0, 0, 0, 0.2);
+      transform: rotateX(3deg) rotateY(-5deg);
+      transform-style: preserve-3d;
+    }
+
+    .video-shell video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .video-shell::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(120deg, rgba(255,255,255,0.24), transparent 36%, rgba(255,255,255,0.08));
+      pointer-events: none;
+    }
+
+    .wish-panel {
+      padding: 28px;
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      background: rgba(255, 255, 255, 0.14);
+      backdrop-filter: blur(18px);
+      box-shadow: 0 22px 58px rgba(44, 8, 29, 0.24);
+    }
+
+    .wish-panel p {
+      margin: 0;
+      color: rgba(255, 247, 237, 0.9);
+      font-size: 1.08rem;
+      line-height: 1.75;
+    }
+
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 18px;
+      margin-top: 28px;
+      perspective: 1100px;
+    }
+
+    .memory-card {
+      position: relative;
+      min-height: 420px;
+      overflow: hidden;
+      border-radius: 20px;
+      border: 1px solid rgba(255, 255, 255, 0.35);
+      box-shadow: 0 20px 50px rgba(40, 9, 28, 0.25);
+      transform-style: preserve-3d;
+      transition: transform 240ms ease, box-shadow 240ms ease;
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    .memory-card:hover {
+      transform: translateY(-8px) rotateX(3deg) rotateY(var(--tilt, 0deg));
+      box-shadow: 0 28px 70px rgba(40, 9, 28, 0.35);
+    }
+
+    .memory-card img {
+      width: 100%;
+      height: 100%;
+      min-height: inherit;
+      object-fit: cover;
+      display: block;
+    }
+
+    .memory-card::after {
+      content: attr(data-caption);
+      position: absolute;
+      left: 14px;
+      right: 14px;
+      bottom: 14px;
+      padding: 12px 14px;
+      border-radius: 14px;
+      color: var(--ink);
+      background: rgba(255, 247, 237, 0.88);
+      font-weight: 800;
+      box-shadow: 0 12px 26px rgba(40, 9, 28, 0.24);
+    }
+
+    .message-board {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 14px;
+      margin-top: 26px;
+    }
+
+    .note {
+      min-height: 150px;
+      padding: 18px;
+      border-radius: 18px;
+      color: var(--ink);
+      background: linear-gradient(145deg, #fff7ed, #ffd8c7);
+      box-shadow: 0 20px 45px rgba(55, 12, 36, 0.18);
+      transform: rotate(var(--r));
+      display: flex;
+      align-items: end;
+      font-weight: 850;
+      line-height: 1.28;
+    }
+
+    .note:nth-child(2) {
+      background: linear-gradient(145deg, #e8fff0, #b7f7d4);
+    }
+
+    .note:nth-child(3) {
+      background: linear-gradient(145deg, #fff1f5, #ffc4d8);
+    }
+
+    .note:nth-child(4) {
+      background: linear-gradient(145deg, #fffbe6, #f7df8e);
+    }
+
+    .finale {
+      min-height: 72vh;
+      display: grid;
+      place-items: center;
+      text-align: center;
+      overflow: hidden;
+    }
+
+    .finale h2 {
+      margin: 0;
+      max-width: 920px;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(2.6rem, 7vw, 7rem);
+      line-height: 0.95;
+      text-shadow: 0 22px 52px rgba(51, 5, 28, 0.42);
+    }
+
+    .finale p {
+      margin: 24px auto 0;
+      max-width: 700px;
+      color: rgba(255, 247, 237, 0.88);
+      font-size: clamp(1rem, 2vw, 1.22rem);
+      line-height: 1.7;
+    }
+
+    .modal {
+      position: fixed;
+      inset: 0;
+      display: none;
+      place-items: center;
+      padding: 18px;
+      background: rgba(16, 4, 15, 0.78);
+      backdrop-filter: blur(12px);
+      z-index: 20;
+    }
+
+    .modal.open {
+      display: grid;
+    }
+
+    .modal-card {
+      width: min(900px, 100%);
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      overflow: hidden;
+      background: #120711;
+      box-shadow: 0 32px 90px rgba(0, 0, 0, 0.42);
+    }
+
+    .modal video {
+      width: 100%;
+      max-height: 76vh;
+      object-fit: contain;
+      display: block;
+      background: #000;
+    }
+
+    .modal-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 14px;
+      color: var(--cream);
+    }
+
+    .icon-btn {
+      width: 42px;
+      height: 42px;
+      border: 1px solid var(--line);
+      border-radius: 50%;
+      color: var(--cream);
+      background: rgba(255, 255, 255, 0.1);
+      cursor: pointer;
+      font-size: 1.25rem;
+    }
+
+    canvas {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 30;
+    }
+
+    @media (max-width: 900px) {
+      .hero,
+      .cinema {
+        grid-template-columns: 1fr;
+      }
+
+      .visual-wrap {
+        min-height: 570px;
+      }
+
+      .gallery {
+        grid-template-columns: 1fr;
+      }
+
+      .memory-card {
+        min-height: 520px;
+      }
+
+      .message-board {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 560px) {
+      .stage {
+        padding-top: 22px;
+      }
+
+      h1 {
+        font-size: clamp(2.8rem, 16vw, 4.7rem);
+      }
+
+      .lead {
+        font-size: 1rem;
+      }
+
+      .visual-wrap {
+        min-height: 490px;
+      }
+
+      .photo-orbit {
+        width: min(360px, 86vw);
+      }
+
+      .portrait.side-a,
+      .portrait.side-b {
+        display: none;
+      }
+
+      section {
+        padding: 58px 16px;
+      }
+
+      .memory-card {
+        min-height: 470px;
+      }
+
+      .message-board {
+        grid-template-columns: 1fr;
+      }
+
+      .note {
+        min-height: 122px;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *,
+      *::before,
+      *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        scroll-behavior: auto !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="ambient" aria-hidden="true" id="ambient"></div>
+  <canvas id="confetti"></canvas>
+
+  <main>
+    <section class="stage" id="top">
+      <div class="hero">
+        <div class="copy">
+          <div class="tag">A tiny world for a priceless friend</div>
+          <h1>Happy Birthday, Best Friend</h1>
+          <p class="lead">
+            May your day feel soft, bright, and full of every little thing that makes you smile.
+            This one is wrapped in memories, flowers, sparkle, and a whole lot of love.
+          </p>
+          <div class="actions">
+            <button class="btn" id="blast">Celebrate</button>
+            <button class="btn secondary" id="openFilm">Play Memory Film</button>
+          </div>
+        </div>
+
+        <div class="visual-wrap" aria-label="Birthday photo scene">
+          <div class="photo-orbit" id="orbit">
+            <div class="portrait side-a">
+              <img src="file:///C:/Users/gaikw/Downloads/doc/WhatsApp%20Image%202026-06-24%20at%209.37.01%20AMs.jpeg" alt="Birthday portrait with flowers" />
+            </div>
+            <div class="portrait main">
+              <video
+                src="file:///C:/Users/gaikw/Downloads/Create_a_heartwarming_D_anima.mp4"
+                poster="file:///C:/Users/gaikw/Downloads/doc/f.jpeg"
+                autoplay
+                muted
+                loop
+                playsinline
+              ></video>
+            </div>
+            <div class="portrait side-b">
+              <img src="file:///C:/Users/gaikw/Downloads/doc/WhatsApp%20Image%202026-06-24%20at%209.37.01%20AM.jpeg" alt="Birthday friends portrait" />
+            </div>
+            <div class="spark-ring"></div>
+          </div>
+        </div>
+      </div>
+      <a class="scroll-cue" href="#film" aria-label="Next section">v</a>
+    </section>
+
+    <section id="film">
+      <div class="section-inner cinema">
+        <div class="video-shell">
+          <video
+            src="file:///C:/Users/gaikw/Downloads/Create_a_heartwarming_D_anima.mp4"
+            poster="file:///C:/Users/gaikw/Downloads/doc/f.jpeg"
+            autoplay
+            muted
+            loop
+            playsinline
+            controls
+          ></video>
+        </div>
+        <div>
+          <h2 class="section-title">A Little Birthday Magic</h2>
+          <div class="wish-panel">
+            <p>
+              Dear best friend, you make ordinary days feel special just by being you.
+              I hope this birthday brings you laughter, sweet surprises, and beautiful memories
+              that stay close to your heart forever.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="section-inner">
+        <h2 class="section-title">Moments That Shine</h2>
+        <div class="gallery">
+          <article class="memory-card" data-caption="Grace in every smile" style="--tilt:-5deg">
+            <img src="file:///C:/Users/gaikw/Downloads/doc/f.jpeg" alt="Smiling birthday portrait" />
+          </article>
+          <article class="memory-card" data-caption="Flowers, joy, and sunshine" style="--tilt:4deg">
+            <img src="file:///C:/Users/gaikw/Downloads/doc/WhatsApp%20Image%202026-06-24%20at%209.37.01%20AMs.jpeg" alt="Birthday portrait holding flowers" />
+          </article>
+          <article class="memory-card" data-caption="Friendship makes it brighter" style="--tilt:-3deg">
+            <img src="file:///C:/Users/gaikw/Downloads/doc/WhatsApp%20Image%202026-06-24%20at%209.37.01%20AM.jpeg" alt="Two friends in birthday outfits" />
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="section-inner">
+        <h2 class="section-title">Birthday Wishes</h2>
+        <div class="message-board">
+          <div class="note" style="--r:-2deg">Stay blessed, happy, and endlessly loved.</div>
+          <div class="note" style="--r:1.5deg">May your dreams bloom bigger this year.</div>
+          <div class="note" style="--r:-1deg">Keep smiling. The world looks better with it.</div>
+          <div class="note" style="--r:2deg">Today is yours. Shine like the star you are.</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="finale">
+      <div class="section-inner">
+        <h2>Wishing You the Happiest Birthday</h2>
+        <p>
+          From my heart to yours: thank you for being my best friend.
+          May this new year of life be gentle, exciting, lucky, and unforgettable.
+        </p>
+      </div>
+    </section>
+  </main>
+
+  <div class="modal" id="modal" aria-hidden="true">
+    <div class="modal-card">
+      <div class="modal-top">
+        <strong>Memory Film</strong>
+        <button class="icon-btn" id="closeFilm" aria-label="Close video">x</button>
+      </div>
+      <video
+        id="modalVideo"
+        src="file:///C:/Users/gaikw/Downloads/Create_a_heartwarming_D_anima.mp4"
+        poster="file:///C:/Users/gaikw/Downloads/doc/f.jpeg"
+        controls
+        playsinline
+      ></video>
+    </div>
+  </div>
+
+  <script>
+    const ambient = document.getElementById("ambient");
+    const heartCount = 28;
+
+    for (let i = 0; i < heartCount; i += 1) {
+      const heart = document.createElement("span");
+      heart.className = "heart";
+      heart.style.left = `${Math.random() * 100}%`;
+      heart.style.animationDuration = `${10 + Math.random() * 12}s`;
+      heart.style.animationDelay = `${Math.random() * -16}s`;
+      heart.style.setProperty("--drift", `${-90 + Math.random() * 180}px`);
+      heart.style.opacity = `${0.18 + Math.random() * 0.38}`;
+      heart.style.scale = `${0.55 + Math.random() * 0.9}`;
+      ambient.appendChild(heart);
+    }
+
+    const orbit = document.getElementById("orbit");
+    let pointerActive = false;
+
+    window.addEventListener("pointermove", (event) => {
+      if (window.matchMedia("(max-width: 700px)").matches) return;
+      pointerActive = true;
+      const x = (event.clientX / window.innerWidth - 0.5) * 20;
+      const y = (event.clientY / window.innerHeight - 0.5) * -12;
+      orbit.style.animation = "none";
+      orbit.style.transform = `rotateX(${y}deg) rotateY(${x}deg) translateZ(0)`;
+    });
+
+    window.addEventListener("pointerleave", () => {
+      if (!pointerActive) return;
+      orbit.style.animation = "";
+      orbit.style.transform = "";
+      pointerActive = false;
+    });
+
+    const canvas = document.getElementById("confetti");
+    const ctx = canvas.getContext("2d");
+    const colors = ["#fff7ed", "#ffd8c7", "#f35b8a", "#b7f7d4", "#f7df8e"];
+    let confetti = [];
+
+    function resizeCanvas() {
+      canvas.width = window.innerWidth * window.devicePixelRatio;
+      canvas.height = window.innerHeight * window.devicePixelRatio;
+      ctx.setTransform(window.devicePixelRatio, 0, 0, window.devicePixelRatio, 0, 0);
+    }
+
+    function launchConfetti(amount = 160) {
+      for (let i = 0; i < amount; i += 1) {
+        confetti.push({
+          x: window.innerWidth / 2 + (Math.random() - 0.5) * 140,
+          y: window.innerHeight * 0.35,
+          vx: (Math.random() - 0.5) * 9,
+          vy: -Math.random() * 9 - 4,
+          g: 0.18 + Math.random() * 0.16,
+          size: 5 + Math.random() * 9,
+          color: colors[Math.floor(Math.random() * colors.length)],
+          spin: Math.random() * Math.PI,
+          vr: (Math.random() - 0.5) * 0.22,
+          life: 160 + Math.random() * 80
+        });
+      }
+    }
+
+    function drawConfetti() {
+      ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
+      confetti = confetti.filter((piece) => piece.life > 0 && piece.y < window.innerHeight + 40);
+
+      for (const piece of confetti) {
+        piece.x += piece.vx;
+        piece.y += piece.vy;
+        piece.vy += piece.g;
+        piece.spin += piece.vr;
+        piece.life -= 1;
+
+        ctx.save();
+        ctx.translate(piece.x, piece.y);
+        ctx.rotate(piece.spin);
+        ctx.fillStyle = piece.color;
+        ctx.fillRect(-piece.size / 2, -piece.size / 2, piece.size, piece.size * 0.55);
+        ctx.restore();
+      }
+
+      requestAnimationFrame(drawConfetti);
+    }
+
+    resizeCanvas();
+    drawConfetti();
+    window.addEventListener("resize", resizeCanvas);
+    window.addEventListener("load", () => setTimeout(() => launchConfetti(120), 500));
+    document.getElementById("blast").addEventListener("click", () => launchConfetti(220));
+
+    const modal = document.getElementById("modal");
+    const modalVideo = document.getElementById("modalVideo");
+    const openFilm = document.getElementById("openFilm");
+    const closeFilm = document.getElementById("closeFilm");
+
+    function showFilm() {
+      modal.classList.add("open");
+      modal.setAttribute("aria-hidden", "false");
+      modalVideo.currentTime = 0;
+      modalVideo.play().catch(() => {});
+      launchConfetti(90);
+    }
+
+    function hideFilm() {
+      modal.classList.remove("open");
+      modal.setAttribute("aria-hidden", "true");
+      modalVideo.pause();
+    }
+
+    openFilm.addEventListener("click", showFilm);
+    closeFilm.addEventListener("click", hideFilm);
+    modal.addEventListener("click", (event) => {
+      if (event.target === modal) hideFilm();
+    });
+    window.addEventListener("keydown", (event) => {
+      if (event.key === "Escape") hideFilm();
+    });
+  </script>
+</body>
+</html>
